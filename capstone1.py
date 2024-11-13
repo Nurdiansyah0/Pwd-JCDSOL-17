@@ -24,8 +24,6 @@ data_karyawan = [
         "gaji": 7000000
     }
 ]
-
-
 def tampilkan_menu_utama(): #EROR HANDLING OK
     """Menampilkan menu utama program."""
     print("\nMenu Utama:")
@@ -88,28 +86,35 @@ def cari_data_karyawan(data_karyawan):
             print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t\t | {karyawan['jabatan']}\t\t |{karyawan['gaji']}")
             return
     print("Data karyawan tidak ditemukan.")
-
-    
-
 def tambah_data_karyawan(data_karyawan):
     """Menambahkan data karyawan baru."""
     id_karyawan = input("Masukkan ID karyawan: ")
+    #check Id
     for karyawan in data_karyawan:
         if karyawan["id"] == id_karyawan:
-            print("ID karyawan sudah ada.")
+            print("Id Karyawan Sudah Ada !")
             return
-
+        else:
+            print()
     nama = input("Masukkan nama karyawan: ")
+
     while True:
+        usia_str = input("Masukkan usia karyawan: ")
         try:
-            usia_str = int(input("Masukkan  usia karyawan: "))
             usia = int(usia_str.split()[0]) #angka sebelum spasi
             break
         except ValueError:
             print("input usia harus berupa angka. Contoh 29")
-    jabatan = input("Masukkan jabatan karyawan: ")
-    gaji = int(input("Masukkan gaji karyawan: "))
 
+    jabatan = input("Masukkan jabatan karyawan: ")
+    while True:
+        gaji_str = input("Masukkan gaji karyawan: ")
+        try:
+            gaji = int(gaji_str)
+            break
+        except ValueError:
+            print("Gaji harus Berupa angka, Contoh : 5000")
+#Append data karyawan
     data_karyawan.append({
         "id": id_karyawan,
         "nama": nama,
@@ -140,6 +145,7 @@ def ubah_data_karyawan(data_karyawan):
     print("Data karyawan tidak ditemukan.")
 
 def hapus_data_karyawan(data_karyawan):
+
     """Menghapus data karyawan berdasarkan ID."""
     if not data_karyawan:
         print("Data karyawan kosong.")
@@ -157,6 +163,7 @@ def hapus_data_karyawan(data_karyawan):
 
     print("Data karyawan tidak ditemukan.")
 # Loop utama program
+
 while True:
     tampilkan_menu_utama()
     pilihan = input("Masukkan pilihan Anda: ")
