@@ -3,21 +3,21 @@
 # Inisialisasi data karyawan
 data_karyawan = [
     {
-        "id": "21676",
+        "id": "001",
         "nama": "Joni",
         "usia": 30,
         "jabatan": "Manager",
         "gaji": 10000000
     },
     {
-        "id": "67890",
+        "id": "002",
         "nama": "Samsul",
         "usia": 25,
         "jabatan": "Staff",
         "gaji": 5000000
     },
     {
-        "id": "82398",
+        "id": "003",
         "nama": "Wong FeHung",
         "usia": 28,
         "jabatan": "Supervisor",
@@ -26,7 +26,7 @@ data_karyawan = [
 ]
 
 
-def tampilkan_menu_utama():
+def tampilkan_menu_utama(): #EROR HANDLING OK
     """Menampilkan menu utama program."""
     print("\nMenu Utama:")
     print("1. Tampilkan Data Karyawan")
@@ -60,7 +60,7 @@ def tampilkan_menu_hapus_data():
     print("1. Hapus Data Karyawan")
     print("2. Kembali ke Menu Utama")
 
-def tampilkan_semua_data(data_karyawan):
+def tampilkan_semua_data(data_karyawan): #EROR HANDLING OKE
     """Menampilkan semua data karyawan."""
     if not data_karyawan:
         print("Data karyawan kosong.")
@@ -68,25 +68,28 @@ def tampilkan_semua_data(data_karyawan):
 
     print("\nDaftar Karyawan:")
     print("-" * 80)
-    print("ID\t | Nama \t\t | Usia \t | Jabatan \t\t | Gaji")
+    print("ID\t | Nama \t | Usia\t | Jabatan \t\t | Gaji")
     print("_" *80)
-    for i, karyawan in enumerate(data_karyawan):
-        print(f"{i}\t|{karyawan}['id'])\t | {karyawan['nama']} \t\t | {karyawan['usia']} \t | {karyawan['jabatan']} \t\t |{karyawan['gaji']}")
+    for karyawan in (data_karyawan):
+        print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t | {karyawan['jabatan']} \t\t |{karyawan['gaji']}")
 
 def cari_data_karyawan(data_karyawan):
     """Mencari data karyawan berdasarkan ID."""
     if not data_karyawan:
         print("Data karyawan kosong.")
         return
-
     id_karyawan = input("Masukkan ID karyawan: ")
     for karyawan in data_karyawan:
         if karyawan["id"] == id_karyawan:
-            print("Data Karyawan:")
-            print(karyawan)
+            print("\nDaftar Karyawan")
+            print("-" * 80)
+            print("|ID\t | Nama\t\t | Usia\t\t | Jabatan \t\t |Gaji")
+            print("_" * 80)
+            print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t\t | {karyawan['jabatan']}\t\t |{karyawan['gaji']}")
             return
-
     print("Data karyawan tidak ditemukan.")
+
+    
 
 def tambah_data_karyawan(data_karyawan):
     """Menambahkan data karyawan baru."""
