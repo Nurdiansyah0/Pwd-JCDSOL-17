@@ -1,5 +1,4 @@
-
-
+# capstone1.py
 # Inisialisasi data karyawan
 data_karyawan = [
     {
@@ -24,7 +23,7 @@ data_karyawan = [
         "gaji": 7000000
     }
 ]
-def tampilkan_menu_utama(): #EROR HANDLING OK
+def tampilkan_menu_utama():
     """Menampilkan menu utama program."""
     print("\nMenu Utama:")
     print("1. Tampilkan Data Karyawan")
@@ -63,13 +62,12 @@ def tampilkan_semua_data(data_karyawan): #EROR HANDLING OKE
     if not data_karyawan:
         print("Data karyawan kosong.")
         return
-
     print("\nDaftar Karyawan:")
-    print("-" * 80)
-    print("|ID\t | Nama \t | Usia\t | Jabatan \t\t | Gaji")
-    print("_" *80)
+    print("_" * 80)
+    print("| ID | Nama          | Usia | Jabatan      | Gaji     |")
+    print("_" * 80)
     for karyawan in (data_karyawan):
-        print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t | {karyawan['jabatan']} \t\t |{karyawan['gaji']}")
+        print(f"| {karyawan['id']:<3} | {karyawan['nama']:<12} | {karyawan['usia']:<4} | {karyawan['jabatan']:<12} | {karyawan['gaji']:>8} | ")
 
 def cari_data_karyawan(data_karyawan):
     """Mencari data karyawan berdasarkan ID."""
@@ -80,33 +78,44 @@ def cari_data_karyawan(data_karyawan):
     for karyawan in data_karyawan:
         if karyawan["id"] == id_karyawan:
             print("\nDaftar Karyawan")
-            print("-" * 80)
-            print("|ID\t | Nama\t\t | Usia\t\t | Jabatan \t\t |Gaji")
             print("_" * 80)
-            print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t\t | {karyawan['jabatan']}\t\t |{karyawan['gaji']}")
+            print("| ID | Nama          | Usia | Jabatan      | Gaji     |")
+            print("_" * 80)
+            print(f"| {karyawan['id']:<3} | {karyawan['nama']:<12} | {karyawan['usia']:<4} | {karyawan['jabatan']:<12} | {karyawan['gaji']:>8} | ")
             return
     print("Data karyawan tidak ditemukan.")
 def tambah_data_karyawan(data_karyawan):
     """Menambahkan data karyawan baru."""
-    id_karyawan = input("Masukkan ID karyawan: ")
-    #check Id
-    for karyawan in data_karyawan:
-        if karyawan["id"] == id_karyawan:
-            print("Id Karyawan Sudah Ada !")
+    while True:
+        id_karyawan = input("Masukkan ID karyawan: ")
+        #check Id
+        ada_id = False
+        for karyawan in data_karyawan:
+            if karyawan["id"] == id_karyawan:
+                ada_id = True
+            
+        if ada_id:
+            print("ID karyawan sudah ada.")
             return
         else:
-            print()
-    nama = input("Masukkan nama karyawan: ")
-
+            nama = input("Masukkan nama karyawan: ")
+            break
     while True:
         usia_str = input("Masukkan usia karyawan: ")
         try:
-            usia = int(usia_str.split()[0]) #angka sebelum spasi
-            break
+            usia = int(usia_str)
+            if 17 <= usia <= 45:
+                break
+            else:
+                print("Usia harus antara 17-45")
         except ValueError:
             print("input usia harus berupa angka. Contoh 29")
 
-    jabatan = input("Masukkan jabatan karyawan: ")
+    while True:
+        jabatan = input("Masukkan jabatan karyawan: ")
+        if jabatan in ["Manager", "Staff", "Supervisor"]:
+            break
+
     while True:
         gaji_str = input("Masukkan gaji karyawan: ")
         try:
@@ -124,10 +133,9 @@ def tambah_data_karyawan(data_karyawan):
         "gaji": gaji
     })
     print("Data karyawan berhasil ditambahkan.")
-
 def ubah_data_karyawan(data_karyawan):
     """Mengubah data karyawan berdasarkan ID."""
-    if not data_karyawan:
+    if not cari_data_karyawan(data_karyawan, id_karyawan):
         print("Data karyawan kosong.")
         return
 
@@ -163,8 +171,8 @@ def hapus_data_karyawan(data_karyawan):
             return
 
     print("Data karyawan tidak ditemukan.")
-# Loop utama program
-
+# Menampilkan menu utama
+# Loop utama#
 while True:
     tampilkan_menu_utama()
     pilihan = input("Masukkan pilihan Anda: ")
