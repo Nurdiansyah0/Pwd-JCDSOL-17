@@ -66,7 +66,7 @@ def tampilkan_semua_data(data_karyawan): #EROR HANDLING OKE
 
     print("\nDaftar Karyawan:")
     print("-" * 80)
-    print("ID\t | Nama \t | Usia\t | Jabatan \t\t | Gaji")
+    print("|ID\t | Nama \t | Usia\t | Jabatan \t\t | Gaji")
     print("_" *80)
     for karyawan in (data_karyawan):
         print(f"|{karyawan['id']}\t | {karyawan['nama']} \t | {karyawan['usia']} \t | {karyawan['jabatan']} \t\t |{karyawan['gaji']}")
@@ -114,6 +114,7 @@ def tambah_data_karyawan(data_karyawan):
             break
         except ValueError:
             print("Gaji harus Berupa angka, Contoh : 5000")
+
 #Append data karyawan
     data_karyawan.append({
         "id": id_karyawan,
@@ -176,7 +177,7 @@ while True:
         elif pilihan_tampilkan_data == "2":
             cari_data_karyawan(data_karyawan)
         elif pilihan_tampilkan_data == "3":
-            pass  # Kembali ke menu utama
+            pass     # Kembali ke menu utama
         else:
             print("Pilihan tidak valid.")
     elif pilihan == "2":
