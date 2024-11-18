@@ -72,9 +72,10 @@ def tampilkan_semua_data(data_karyawan): #EROR HANDLING OKE
 def cari_data_karyawan(data_karyawan):
     """Mencari data karyawan berdasarkan ID."""
     if not data_karyawan:
-        print("Data karyawan kosong.")
-        return
-    id_karyawan = input("Masukkan ID karyawan: ")
+            print("Data karyawan kosong.")
+            return
+    id_karyawan = input("Masukkan ID karyawan: ").strip().lower()
+    karyawan_ditemukan = False
     for karyawan in data_karyawan:
         if karyawan["id"] == id_karyawan:
             print("\nDaftar Karyawan")
@@ -82,24 +83,22 @@ def cari_data_karyawan(data_karyawan):
             print("| ID | Nama          | Usia | Jabatan      | Gaji     |")
             print("_" * 80)
             print(f"| {karyawan['id']:<3} | {karyawan['nama']:<12} | {karyawan['usia']:<4} | {karyawan['jabatan']:<12} | {karyawan['gaji']:>8} | ")
-            return
-    print("Data karyawan tidak ditemukan.")
+            karyawan_ditemukan = True
+            break
+    if not karyawan_ditemukan:
+        print("Data karyawan tidak ditemukan.")
 def tambah_data_karyawan(data_karyawan):
     """Menambahkan data karyawan baru."""
-    while True:
-        id_karyawan = input("Masukkan ID karyawan: ")
-        #check Id
-        ada_id = False
-        for karyawan in data_karyawan:
-            if karyawan["id"] == id_karyawan:
-                ada_id = True
-            
-        if ada_id:
-            print("ID karyawan sudah ada.")
-            return
-        else:
-            nama = input("Masukkan nama karyawan: ")
-            break
+    tampilkan_semua_data(data_karyawan)
+    id_karyawan = input("Masukkan ID karyawan: ").strip()
+    #Check ID
+    if any(karyawan["id"] == id_karyawan for karyawan in data_karyawan):
+        print("ID karyawan sudah ada.")
+        return
+
+    nama = input("Masukkan nama karyawan: ").strip().capitalize()
+
+        #Check Umur
     while True:
         usia_str = input("Masukkan usia karyawan: ")
         try:
@@ -111,18 +110,25 @@ def tambah_data_karyawan(data_karyawan):
         except ValueError:
             print("input usia harus berupa angka. Contoh 29")
 
+        #Check Jabatan
     while True:
-        jabatan = input("Masukkan jabatan karyawan: ")
+        jabatan = input("Masukkan jabatan karyawan: ").strip().capitalize()
         if jabatan in ["Manager", "Staff", "Supervisor"]:
             break
-
+        else:
+            print("Jabatan harus Manager, Staff, atau Supervisor")
+            
+        #Check Gaji
     while True:
         gaji_str = input("Masukkan gaji karyawan: ")
         try:
             gaji = int(gaji_str)
-            break
+            if gaji >= 4500000:
+                break
+            else:
+                print("Gaji harus lebih dari 4500000")
         except ValueError:
-            print("Gaji harus Berupa angka, Contoh : 5000")
+            print("Gaji harus Berupa angka, Contoh : 4500000")
 
 #Append data karyawan
     data_karyawan.append({
@@ -135,26 +141,32 @@ def tambah_data_karyawan(data_karyawan):
     print("Data karyawan berhasil ditambahkan.")
 def ubah_data_karyawan(data_karyawan):
     """Mengubah data karyawan berdasarkan ID."""
-    if not cari_data_karyawan(data_karyawan, id_karyawan):
+    if not data_karyawan:
         print("Data karyawan kosong.")
         return
-
+    tampilkan_semua_data(data_karyawan)
     id_karyawan = input("Masukkan ID karyawan: ")
+    if not id_karyawan.isdigit():
+        print("ID harus berupa angka.")
+        return
     for karyawan in data_karyawan:
         if karyawan["id"] == id_karyawan:
             print("Data Karyawan:")
             print(karyawan)
             if input("Lanjutkan ubah data? (ya/tidak): ").lower() == "ya":
                 kolom = input("Masukkan kolom yang ingin diubah: ")
-                nilai_baru = input("Masukkan nilai baru: ")
+                if kolom not in karyawan:
+                    print("Kolom tidak valid.")
+                    return
+                nilai_baru = input("Masukkan nilai baru: ").capitalize()
                 karyawan[kolom] = nilai_baru
                 print("Data karyawan berhasil diubah.")
+            else:
+                print("Data karyawan tidak diubah.")
             return
-
     print("Data karyawan tidak ditemukan.")
-
+    
 def hapus_data_karyawan(data_karyawan):
-
     """Menghapus data karyawan berdasarkan ID."""
     if not data_karyawan:
         print("Data karyawan kosong.")
